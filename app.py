@@ -37,7 +37,7 @@ def send_message():
     msg = f"Name: {crypto['name']}\nSymbol: {crypto['symbol']}\nPrice in USD: {crypto['price']}\n\n"
     message_to_send += msg
   bot.send_message(chat_id='-1001873839363', text=message_to_send)
-  time.sleep(3600)  # Sleep for an hour
+  time.sleep(20)  # Sleep for an hour
 
 while True:
   send_message()
