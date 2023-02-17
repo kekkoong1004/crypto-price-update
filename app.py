@@ -25,19 +25,19 @@ def get_price():
     price_list.append({
       'name': cryptos[key][0]['name'],
       'symbol': cryptos[key][0]['symbol'],
-      'price': cryptos[key][0]['quote']['USD']['price']
+      'price': format(cryptos[key][0]['quote']['USD']['price'], '.4f')
     })
   return price_list
 
 
 def send_message():
   data = get_price()
-  message = ''
+  message_to_send = ''
   for crypto in data:
     msg = f"Name: {crypto['name']}\nSymbol: {crypto['symbol']}\nPrice in USD: {crypto['price']}\n\n"
-    message += msg
-  bot.send_message(chat_id=223203746, text=message)
-  time.sleep(10)  # Sleep for an hour
+    message_to_send += msg
+  bot.send_message(chat_id='-1001873839363', text=message_to_send)
+  time.sleep(3600)  # Sleep for an hour
 
 while True:
   send_message()
