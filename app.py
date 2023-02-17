@@ -18,24 +18,26 @@ def get_price():
 
   response = requests.get(url, headers=headers, params=parameters)
 
-    #   bitcoin_price = data['data']['1']['quote']['USD']['price']
-    #   eth_price = data['data']['1027']['quote']['USD']['price']
-    #   price_list = {
-    #     'BTC_price' : data['data']['1']['quote']['USD']['price'],
-    #     'Eth_price' : data['data']['1027']['quote']['USD']['price']
-    #   }
-
   data = response.json()
-  price = data['data']
-  return price
+  cryptos =  data['data']
+  price_list = []
+  for key in cryptos.keys():
+    price_list.append({
+      'name': cryptos[key][0]['name'],
+      'symbol': cryptos[key][0]['symbol'],
+      'price': cryptos[key][0]['quote']['USD']['price']
+    })
+  return price_list
 
-# print(get_price())
 
+def send_message():
+  data = get_price()
+  message = ''
+  for crypto in data:
+    msg = f"Name: {crypto['name']}\nSymbol: {crypto['symbol']}\nPrice in USD: {crypto['price']}\n\n"
+    message += msg
+  bot.send_message(chat_id=223203746, text=message)
+  time.sleep(10)  # Sleep for an hour
 
-@bot.message_handler()
-def send_message(message):
-  while True:
-    bot.send_message(chat_id=message.chat.id, text=f'Bitcoin price now is USD ${telegram_API}')
-    time.sleep(3600)  # Sleep for an hour
-
-bot.polling()
+while True:
+  send_message()
